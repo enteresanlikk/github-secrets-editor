@@ -174,6 +174,9 @@ export default function Home() {
   const handleCancelEdit = async () => {
     if (selectedRepo) {
       setIsEditing(false);
+
+      const updatedSecrets = await fetchSecrets(selectedRepo.full_name);
+      setSecrets(updatedSecrets);
     }
   };
 
@@ -193,7 +196,7 @@ export default function Home() {
                 <Input
                   id="github-token"
                   type="password"
-                  value={token}
+                  defaultValue={token}
                   onChange={(e) => handleTokenChange(e.target.value)}
                   placeholder="Enter your GitHub token"
                   className="flex-1 px-3 py-2 border rounded-md"

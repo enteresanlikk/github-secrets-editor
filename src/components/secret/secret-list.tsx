@@ -1,8 +1,7 @@
 import { Secret } from "@/types/github";
-import { Edit2, Save, Plus, Trash2, X } from "lucide-react";
+import { Edit2, Save, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { SecretItem } from "@/components/secret/secret-item";
 
 type SecretListProps = {
   secrets: Secret[];
@@ -37,7 +36,7 @@ const SecretList = ({
             variant="outline"
           >
             <Edit2 />
-            <span>Edit</span>
+            Edit
           </Button>
         ) : (
           <Button
@@ -45,7 +44,7 @@ const SecretList = ({
             variant="outline"
           >
             <X />
-            <span>Exit Edit</span>
+            Exit Edit
           </Button>
         )}
       </div>
@@ -56,42 +55,17 @@ const SecretList = ({
         </div>
       )}
 
-      <div className="space-y-3">
-        {secrets.map((secret, secretIndex) => (
-          <div key={secret.id} className="flex items-end gap-2">
-            <div className="flex-1">
-              {isEditing && (
-                <Label htmlFor={`name-${secretIndex}`} className="text-xs">NAME</Label>
-                )}
-              <Input
-                id={`name-${secretIndex}`}
-                type="text"
-                value={secret.name}
-                onChange={(e) => onUpdate(secret.id, "name", e.target.value)}
-                disabled={!isEditing}
-              />
-            </div>
-            {isEditing && (
-              <>
-                <div className="flex-1 relative">
-                  <Label htmlFor={`value-${secretIndex}`} className="text-xs">VALUE</Label>
-                  <Input
-                    id={`value-${secretIndex}`}
-                    type="password"
-                    value={secret.value}
-                    onChange={(e) => onUpdate(secret.id, "value", e.target.value)}
-                    disabled={!isEditing}
-                  />
-                </div>
-                <Button
-                  onClick={() => onDelete(secret.id)}
-                  size={"icon"}
-                  variant={"destructive"}
-                >
-                  <Trash2 />
-                </Button>
-              </>
-            )}
+      <div className="space-y-2">
+        {secrets.map((secret, index) => (
+          <div key={index}>
+            <SecretItem
+              key={secret.id}
+              secret={secret}
+              index={index}
+              isEditing={isEditing}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+            />
           </div>
         ))}
       </div>
@@ -104,7 +78,7 @@ const SecretList = ({
               variant="outline"
             >
               <Plus />
-              <span>Add</span>
+              Add
             </Button>
           </div>
           <div className="flex justify-end">
@@ -113,7 +87,7 @@ const SecretList = ({
               disabled={loading}
             >
               <Save />
-              <span>Save</span>
+              Save
             </Button>
           </div>
         </div>
@@ -121,6 +95,7 @@ const SecretList = ({
     </div>
   );
 };
+
 SecretList.displayName = "SecretList";
 
 export { SecretList, type SecretListProps };

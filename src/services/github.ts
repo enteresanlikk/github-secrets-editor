@@ -35,7 +35,6 @@ const fetchSecrets = async (repoFullName: string): Promise<Secret[]> => {
 }
 
 const updateSecrets = async (repoFullName: string, secrets: Secret[]): Promise<void> => {
-    // Get existing secrets
     const response = await githubApi.get<{ secrets: GitHubSecret[] }>(
         `/repos/${repoFullName}/actions/secrets`
     );
@@ -43,7 +42,6 @@ const updateSecrets = async (repoFullName: string, secrets: Secret[]): Promise<v
     const existingSecrets = new Set(response.data.secrets.map(s => s.name));
     const newSecrets = new Set(secrets.map(s => s.name));
 
-    // Delete removed secrets
     for (const existingName of existingSecrets) {
         if (!newSecrets.has(existingName)) {
             await githubApi.delete(
@@ -52,12 +50,10 @@ const updateSecrets = async (repoFullName: string, secrets: Secret[]): Promise<v
         }
     }
 
-    // Get public key for encryption
     const keyResponse = await githubApi.get<PublicKey>(
         `/repos/${repoFullName}/actions/secrets/public-key`
     );
 
-    // Update or create secrets
     for (const secret of secrets) {
         if (!secret.name.trim() || !secret.value.trim()) continue;
 

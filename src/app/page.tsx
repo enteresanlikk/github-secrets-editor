@@ -188,6 +188,13 @@ export default function Home() {
     }
   };
 
+  const handleBulkAddSecrets = (newSecrets: Secret[]) => {
+    const existingNames = new Set(secrets.map(s => s.name));
+    const uniqueNewSecrets = newSecrets.filter(s => !existingNames.has(s.name));
+    
+    setSecrets([...secrets, ...uniqueNewSecrets]);
+  };
+
   return (
     <main className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -304,6 +311,7 @@ export default function Home() {
                     onDelete={deleteSecret}
                     onUpdate={updateSecret}
                     onCancelEdit={handleCancelEdit}
+                    onBulkAdd={handleBulkAddSecrets}
                   />
                 )}
               </div>

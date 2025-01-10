@@ -18,7 +18,6 @@ export const setGithubToken = (token: string) => {
   }
 };
 
-// Request interceptor
 githubApi.interceptors.request.use(
   (config) => {
     if (currentToken && !config.headers["Authorization"]) {
@@ -31,12 +30,10 @@ githubApi.interceptors.request.use(
   }
 );
 
-// Response interceptor
 githubApi.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      // GitHub API error messages are usually in error.response.data.message
       const message = error.response.data?.message || "An error occurred";
       return Promise.reject(new Error(message));
     }

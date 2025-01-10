@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface SecretsListProps {
+type SecretsListProps = {
   secrets: Secret[];
   isEditing: boolean;
   loading: boolean;
@@ -14,7 +14,7 @@ interface SecretsListProps {
   onDelete: (id: string) => void;
   onUpdate: (id: string, field: "name" | "value", value: string) => void;
   onCancelEdit: () => void;
-}
+};
 
 const SecretsList = ({
   secrets,
@@ -123,4 +123,4 @@ const SecretsList = ({
 };
 SecretsList.displayName = "SecretsList";
 
-export { SecretsList };
+export { SecretsList, type SecretsListProps };

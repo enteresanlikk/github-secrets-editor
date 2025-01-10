@@ -193,7 +193,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center space-x-2 mb-8">
           <Github />
-          <h1 className="text-2xl font-bold">GitHub Secrets Manager</h1>
+          <h1 className="text-2xl font-bold">GitHub Secrets Editor</h1>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-sm border relative">

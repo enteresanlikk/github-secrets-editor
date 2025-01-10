@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Github, User, Building2 } from "lucide-react";
 import { SecretList } from "@/components/secret/secret-list";
 import { RepoType, Repository, Organization, Secret } from "@/types/github";
+import { ApiError } from "@/types/api";
 import { fetchOrganizationRepos, fetchOrganizations, fetchPersonalRepos, fetchSecrets, updateSecrets } from "@/services/github";
 import { setGithubToken } from "@/lib/github";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Loading } from "@/components/common/loading";
 
 export default function Home() {
   const [token, setToken] = useState<string>("");
@@ -31,8 +33,14 @@ export default function Home() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [hasLoadedSecrets, setHasLoadedSecrets] = useState<boolean>(false);
 
-  const handleError = (err: any) => {
-    setError(err instanceof Error ? err.message : "An error occurred");
+  const handleError = (err: unknown) => {
+    if (err instanceof Error) {
+      setError(err.message);
+    } else if (typeof err === 'object' && err !== null && 'message' in err) {
+      setError((err as ApiError).message);
+    } else {
+      setError('An unexpected error occurred');
+    }
     setLoading(false);
   };
 
@@ -184,11 +192,16 @@ export default function Home() {
     <main className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center space-x-2 mb-8">
-          <Github className="w-8 h-8" />
+          <Github />
           <h1 className="text-2xl font-bold">GitHub Secrets Manager</h1>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="bg-white p-6 rounded-lg shadow-sm border relative">
+          {loading && (
+            <div className="absolute z-50 inset-0 bg-white/50 backdrop-blur-sm flex items-center justify-center">
+              <Loading />
+            </div>
+          )}
           <div className="space-y-4">
             <div>
               <Label className="block text-sm font-medium mb-2" htmlFor="github-token">GitHub Token</Label>
@@ -217,15 +230,15 @@ export default function Home() {
                     onClick={() => handleRepoTypeChange("personal")}
                     className={cn(`flex items-center space-x-2 px-4 py-2 border-b-2 border-transparent`, repoType === "personal" && "border-primary-foreground")}
                   >
-                    <User className="w-4 h-4" />
-                    <span>Personal Repositories</span>
+                    <User />
+                    Personal Repositories
                   </Button>
                   <Button
                     onClick={() => handleRepoTypeChange("organization")}
                     className={cn(`flex items-center space-x-2 px-4 py-2 border-b-2 border-transparent`, repoType === "organization" && "border-primary-foreground")}
                   >
-                    <Building2 className="w-4 h-4" />
-                    <span>Organization Repositories</span>
+                    <Building2 />
+                    Organization Repositories
                   </Button>
                 </div>
 

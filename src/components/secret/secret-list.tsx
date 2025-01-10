@@ -34,6 +34,7 @@ const SecretList = ({
           <Button
             onClick={onEdit}
             variant="outline"
+            disabled={loading}
           >
             <Edit2 />
             Edit
@@ -42,6 +43,7 @@ const SecretList = ({
           <Button
             onClick={onCancelEdit}
             variant="outline"
+            disabled={loading}
           >
             <X />
             Exit Edit
@@ -76,6 +78,7 @@ const SecretList = ({
             <Button
               onClick={onAdd}
               variant="outline"
+              disabled={loading}
             >
               <Plus />
               Add

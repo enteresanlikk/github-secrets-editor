@@ -1,30 +1,30 @@
-export interface Repository {
+export type Repository = {
   full_name: string;
   name: string;
   owner: {
     login: string;
   };
-}
+};
 
-export interface Organization {
+export type Organization = {
   login: string;
   avatar_url: string;
-}
+};
 
-export interface GitHubSecret {
+export type GitHubSecret = {
   name: string;
   value?: string;
-}
+};
 
-export interface Secret {
+export type Secret = {
   id: string;
   name: string;
   value: string;
-}
+};
 
-export interface PublicKey {
+export type PublicKey = {
   key_id: string;
   key: string;
-}
+};
 
 export type RepoType = "personal" | "organization";

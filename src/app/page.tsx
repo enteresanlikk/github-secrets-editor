@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Github, User, Building2 } from "lucide-react";
-import { SecretsList } from "@/components/secrets/secrets-list";
+import { SecretList } from "@/components/secret/secret-list";
 import { RepoType, Repository, Organization, Secret } from "@/types/github";
 import { fetchOrganizationRepos, fetchOrganizations, fetchPersonalRepos, fetchSecrets, updateSecrets } from "@/services/github";
 import { setGithubToken } from "@/lib/github";
@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function Home() {
   const [token, setToken] = useState<string>("");
@@ -187,9 +188,10 @@ export default function Home() {
         <div className="bg-white p-6 rounded-lg shadow-sm border">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">GitHub Token</label>
+              <Label className="block text-sm font-medium mb-2" htmlFor="github-token">GitHub Token</Label>
               <div className="flex space-x-2">
                 <Input
+                  id="github-token"
                   type="password"
                   value={token}
                   onChange={(e) => handleTokenChange(e.target.value)}
@@ -226,7 +228,7 @@ export default function Home() {
 
                 {repoType === "organization" && (
                   <div>
-                    <label className="block text-sm font-medium mb-2">Select Organization</label>
+                    <Label className="block text-sm font-medium mb-2">Select Organization</Label>
                     <div className="flex space-x-2">
                       <Select
                         onValueChange={(value) => handleOrganizationChange(value)}
@@ -250,7 +252,7 @@ export default function Home() {
 
                 {repositories.length > 0 && (
                   <div>
-                    <label className="block text-sm font-medium mb-2">Select Repository</label>
+                    <Label className="block text-sm font-medium mb-2">Select Repository</Label>
                     <div className="flex space-x-2">
                       <Select
                         onValueChange={(value) => {
@@ -276,7 +278,7 @@ export default function Home() {
                 )}
 
                 {hasLoadedSecrets && selectedRepo && (
-                  <SecretsList
+                  <SecretList
                     secrets={secrets}
                     isEditing={isEditing}
                     loading={loading}

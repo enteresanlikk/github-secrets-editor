@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-type SecretsListProps = {
+type SecretListProps = {
   secrets: Secret[];
   isEditing: boolean;
   loading: boolean;
@@ -16,7 +16,7 @@ type SecretsListProps = {
   onCancelEdit: () => void;
 };
 
-const SecretsList = ({
+const SecretList = ({
   secrets,
   isEditing,
   loading,
@@ -26,7 +26,7 @@ const SecretsList = ({
   onDelete,
   onUpdate,
   onCancelEdit
-}: SecretsListProps) => {
+}: SecretListProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -121,6 +121,6 @@ const SecretsList = ({
     </div>
   );
 };
-SecretsList.displayName = "SecretsList";
+SecretList.displayName = "SecretList";
 
-export { SecretsList, type SecretsListProps };
+export { SecretList, type SecretListProps };

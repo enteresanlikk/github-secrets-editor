@@ -2,7 +2,6 @@ import { Secret } from "@/types/github";
 import { Edit2, Save, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SecretItem } from "@/components/secret/secret-item";
-import { Loading } from "@/components/common/loading";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 

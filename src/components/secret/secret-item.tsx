@@ -3,6 +3,7 @@ import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 type SecretItemProps = {
     secret: Secret;
@@ -33,9 +34,8 @@ const SecretItem = ({
                 </div>
                 <div className="flex-1 relative">
                     <Label htmlFor={`value-${index}`} className="text-xs">VALUE</Label>
-                    <Input
+                    <Textarea
                         id={`value-${index}`}
-                        type="password"
                         defaultValue={secret.value}
                         onChange={(e) => onUpdate?.(secret.id, "value", e.target.value)}
                     />
